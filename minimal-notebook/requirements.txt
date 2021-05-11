@@ -38,4 +38,4 @@ xlrd==1.2.*
 
 ### tensorflow-notebook
 
-tensorflow==2.0.0
+tensorflow==2.4.0
