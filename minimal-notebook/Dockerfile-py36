@@ -1,5 +1,5 @@
-FROM centos/python-36-centos7:latest
-FROM registry.cloud.zf-world.com/openshift/cuda-vector-add:v0.1
+FROM centos/python-38-centos7:latest
+FROM nvidia/cuda:10.2-cudnn7-runtime-centos7
 
 USER root
 
