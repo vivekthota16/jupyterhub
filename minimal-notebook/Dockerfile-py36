@@ -11,6 +11,8 @@ RUN rm -rf /tmp/src/.git* && \
     chmod -R g+w /tmp/src && \
     rm -rf /tmp/scripts && \
     mv /tmp/src/.s2i/bin /tmp/scripts
+    
+ENV XDG_CACHE_HOME=/opt/app-root/src/.cache
 
 USER 1001
 
