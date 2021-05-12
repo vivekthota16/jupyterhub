@@ -1,5 +1,6 @@
 FROM centos/python-38-centos7:latest
-FROM nvidia/cuda:10.2-cudnn7-runtime-centos7
+
+FROM nvidia/cuda:11.3.0-cudnn8-runtime-ubuntu18.04
 
 USER root
 
