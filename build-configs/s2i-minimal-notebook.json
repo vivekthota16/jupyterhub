@@ -60,7 +60,8 @@
                 },
                 "resources": {
                     "limits": {
-                        "memory": "1Gi",
+                        "memory": "4Gi",
+                        "cpu": 4
                         "nvidia.com/gpu": 1
                     }
                 }
@@ -109,7 +110,8 @@
                 },
                 "resources": {
                     "limits": {
-                        "memory": "1Gi",
+                        "memory": "4Gi",
+                        "cpu": 4
                         "nvidia.com/gpu": 1
                     }
                 }
