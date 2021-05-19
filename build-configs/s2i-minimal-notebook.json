@@ -97,7 +97,7 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "docker-python3-ubuntu:3.8.0",
+                            "name": "nvidia-ubuntu:latest",
                             "namespace": "ocp050020"
                         }
                     }
