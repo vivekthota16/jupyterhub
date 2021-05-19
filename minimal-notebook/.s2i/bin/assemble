@@ -24,7 +24,7 @@ set -eo pipefail
 
 #pip install -r /tmp/src/requirements.txt
 
-npm cache clean --force
+#npm cache clean --force
 
 rm -rf $HOME/.cache/yarn
 rm -rf $HOME/.node-gyp
