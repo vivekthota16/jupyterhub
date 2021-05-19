@@ -97,8 +97,8 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "coda-py3:latest",
-                            "namespace": "ocp050020"
+                            "name": "python:3.8",
+                            "namespace": "openshift"
                         }
                     }
                 },
