@@ -1,3 +1,5 @@
+FROM nvidia/cuda:10.2-cudnn7-runtime-centos7 AS base
+
 USER root
 
 COPY . /tmp/src
