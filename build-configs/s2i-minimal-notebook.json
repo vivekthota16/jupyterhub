@@ -97,7 +97,7 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "nvidia-ubuntu:latest",
+                            "name": "coda-py3:latest",
                             "namespace": "ocp050020"
                         }
                     }
