@@ -18,6 +18,18 @@ LABEL io.k8s.description="S2I builder for custom Jupyter notebooks." \
       io.openshift.expose-services="8080:http" \
       io.openshift.tags="builder,jupyter" \
       io.openshift.s2i.scripts-url="image:///opt/app-root/builder"
+      
+FROM nvidia/cuda:11.3.0-runtime-centos8
+LABEL maintainer "NVIDIA CORPORATION <sw-cuda-installer@nvidia.com>"
+
+ENV CUDNN_VERSION 8.2.0.53
+LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
+
+RUN yum install -y \
+    libcudnn8-${CUDNN_VERSION}-1.cuda11.3 \
+    && yum clean all \
+    && rm -rf /var/cache/yum/*
+
 
 RUN /tmp/scripts/assemble
 
