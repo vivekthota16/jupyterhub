@@ -97,8 +97,8 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "python:3.8",
-                            "namespace": "openshift"
+                            "name": "docker-python3-ubuntu:3.8.0",
+                            "namespace": "matthewfeickert"
                         }
                     }
                 },
