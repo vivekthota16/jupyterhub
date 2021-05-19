@@ -97,8 +97,8 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "docker-python3-ubuntu:3.8.0",
-                            "namespace": "matthewfeickert"
+                            "name": "ubuntu-python38:latest",
+                            "namespace": "registry.cloud.zf-world.com/aitechcenter"
                         }
                     }
                 },
