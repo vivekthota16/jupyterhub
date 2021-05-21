@@ -1,6 +1,6 @@
-FROM nvidia/cuda:10.2-cudnn7-runtime-centos7 AS base
+#FROM nvidia/cuda:10.2-cudnn7-runtime-centos7 AS base
 
-USER root
+#USER root
 
 COPY . /tmp/src
 
@@ -13,7 +13,7 @@ RUN rm -rf /tmp/src/.git* && \
     
 ENV XDG_CACHE_HOME=/opt/app-root/src/.cache
 
-USER 1001
+#USER 1001
 
 LABEL io.k8s.description="S2I builder for custom Jupyter notebooks." \
       io.k8s.display-name="Jupyter Notebook" \
