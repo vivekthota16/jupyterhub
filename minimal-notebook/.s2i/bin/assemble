@@ -10,19 +10,19 @@ set -eo pipefail
 
 # Ensure we are using the latest pip and wheel packages.
 
-su pip install -U pip setuptools wheel
+sudo pip install -U pip setuptools wheel
 
 # Install mod_wsgi for use in optional webdav support.
 
-su pip install'mod_wsgi==4.6.8'
+sudo pip install'mod_wsgi==4.6.8'
 
 # Install supervisord for managing multiple applications.
 
-su pip install 'supervisor==4.1.0'
+sudo pip install 'supervisor==4.1.0'
 
 # Install base packages needed for running Jupyter Notebooks. 
 
-su pip install -r /tmp/src/requirements.txt
+sudo pip install -r /tmp/src/requirements.txt
 
 npm cache clean --force
 
