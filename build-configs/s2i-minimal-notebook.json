@@ -97,7 +97,7 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "cuda-tf-10:latest",
+                            "name": "cuda-tf-10:11.3.0-cudnn8-runtime-centos8",
                             "namespace": "ocp050020"
                         }
                     }
