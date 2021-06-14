@@ -97,7 +97,7 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "cuda-tf-10:runtime",
+                            "name": "cuda-tf-10:v1.4_cuda-11.0_ubuntu-18.04_python-only",
                             "namespace": "ocp050020"
                         }
                     }
