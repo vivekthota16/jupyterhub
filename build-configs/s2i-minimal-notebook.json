@@ -98,7 +98,7 @@
                         "from": {
                             "kind": "ImageStreamTag",
                             "name": "python:3.8",
-                            "namespace": "ocp050020"
+                            "namespace": "openshift"
                         }
                     }
                 },
