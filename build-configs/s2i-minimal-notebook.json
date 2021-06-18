@@ -97,8 +97,8 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "ubuntu-python38:latest",
-                            "namespace": "ocp050020"
+                            "name": "python:3.8",
+                            "namespace": "openshift"
                         }
                     }
                 },
