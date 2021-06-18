@@ -1,4 +1,52 @@
+FROM nvidia/cuda:11.2.0-runtime-ubuntu20.04
+
+LABEL maintainer "Z0003864<vivek.thota@zf.com>"
+
+# Set ZF proxies
+ENV http_proxy=http://frd-proxy.emea.zf-world.com:8080 \
+    https_proxy=http://frd-proxy.emea.zf-world.com:8080 \
+    no_proxy=.zf-world.com \
+    HTTP_PROXY=http://frd-proxy.emea.zf-world.com:8080 \
+    HTTPS_PROXY=http://frd-proxy.emea.zf-world.com:8080 \
+    NO_PROXY=.zf-world.com
+  
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates apt-transport-https gnupg2 curl && \
+    NVIDIA_GPGKEY_SUM=d1be581509378368edeec8c1eb2958702feedf3bc3d17011adbf24efacce4ab5 && \
+    NVIDIA_GPGKEY_FPR=ae09fe4bbd223a84b2ccfce3f60f4b3d7fa2af80 && \
+    apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub && \
+    apt-key adv --export --no-emit-version -a $NVIDIA_GPGKEY_FPR | tail -n +5 > cudasign.pub && \
+    echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64 /" > /etc/apt/sources.list.d/cuda.list && \
+    echo "deb https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu2004/x86_64 /" > /etc/apt/sources.list.d/nvidia-ml.list \
+    && apt-get purge --auto-remove -y gnupg2 \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV CUDA_VERSION 11.2.0
+ENV CUDA_PKG_VERSION 11-2=$CUDA_VERSION-1
+
+# Required for nvidia-docker v1
+RUN echo "/usr/local/nvidia/lib" >> /etc/ld.so.conf.d/nvidia.conf && \
+    echo "/usr/local/nvidia/lib64" >> /etc/ld.so.conf.d/nvidia.conf
+
+ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
+ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
+
+USER root
+
 COPY . /tmp/src
+
+# nvidia-container-runtime
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+ENV NVIDIA_REQUIRE_CUDA "cuda>=10.1 brand=tesla,driver>=396,driver<397 brand=tesla,driver>=410,driver<411 brand=tesla,driver>=418,driver<419"
+
+ENV APP_ROOT=/opt/app-root
+ENV PATH=/usr/local/bin:${PATH} HOME=${APP_ROOT}
+#COPY bin/ /usr/local/bin/
+RUN mkdir ${APP_ROOT} && \
+    chmod -R u+x /usr/local/bin && \
+    chgrp -R 0 ${APP_ROOT} && \
+    chmod -R g=u ${APP_ROOT} /etc/passwd
 
 RUN rm -rf /tmp/src/.git* && \
     chown -R 1001 /tmp/src && \
@@ -6,8 +54,14 @@ RUN rm -rf /tmp/src/.git* && \
     chmod -R g+w /tmp/src && \
     rm -rf /tmp/scripts && \
     mv /tmp/src/.s2i/bin /tmp/scripts
-    
-ENV XDG_CACHE_HOME=/opt/app-root/src/.cache
+
+RUN apt clean && apt-get upgrade && apt-get update && apt-get install -y apt-transport-https && apt-get install -y --no-install-recommends     
+RUN apt-get -y install software-properties-common
+RUN apt-get -y install python3.8 
+RUN apt-get -y install git
+RUN apt-get -y install python3-pip
+
+USER 1001
 
 LABEL io.k8s.description="S2I builder for custom Jupyter notebooks." \
       io.k8s.display-name="Jupyter Notebook" \
@@ -15,6 +69,7 @@ LABEL io.k8s.description="S2I builder for custom Jupyter notebooks." \
       io.openshift.tags="builder,jupyter" \
       io.openshift.s2i.scripts-url="image:///opt/app-root/builder"
 
+ENV PATH /opt/app-root/.local/bin:${PATH}
 RUN /tmp/scripts/assemble
 
 CMD [ "/opt/app-root/builder/run" ]
