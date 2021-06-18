@@ -2,6 +2,8 @@ FROM registry.cloud.zf-world.com/guenther_erli/nvidia-cuda:cuda10.2-runtime-cudn
 
 LABEL maintainer "Z0003864<vivek.thota@zf.com>"
 
+USER 1001
+
 # Set ZF proxies
 ENV http_proxy=http://frd-proxy.emea.zf-world.com:8080 \
     https_proxy=http://frd-proxy.emea.zf-world.com:8080 \
@@ -18,7 +20,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-key adv --export --no-emit-version -a $NVIDIA_GPGKEY_FPR | tail -n +5 > cudasign.pub && \
     echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64 /" > /etc/apt/sources.list.d/cuda.list && \
     echo "deb https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64 /" > /etc/apt/sources.list.d/nvidia-ml.list \
-    && apt-get purge --auto-remove -y gnupg2 
+    && apt-get purge --auto-remove -y gnupg2 \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV CUDA_VERSION 10.2.0
 ENV CUDA_PKG_VERSION 10-2=$CUDA_VERSION-1
@@ -29,8 +32,6 @@ RUN echo "/usr/local/nvidia/lib" >> /etc/ld.so.conf.d/nvidia.conf && \
 
 ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
 ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
-
-USER root
 
 COPY . /tmp/src
 
@@ -53,8 +54,6 @@ RUN rm -rf /tmp/src/.git* && \
     chmod -R g+w /tmp/src && \
     rm -rf /tmp/scripts && \
     mv /tmp/src/.s2i/bin /tmp/scripts
-
-USER 1001
 
 RUN apt clean && apt-get upgrade && apt-get update && apt-get install -y apt-transport-https && apt-get install -y --no-install-recommends     
 RUN apt-get -y install software-properties-common
