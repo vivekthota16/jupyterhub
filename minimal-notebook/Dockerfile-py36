@@ -55,13 +55,13 @@ RUN rm -rf /tmp/src/.git* && \
     rm -rf /tmp/scripts && \
     mv /tmp/src/.s2i/bin /tmp/scripts
 
+USER 1001
+
 RUN apt clean && apt-get upgrade && apt-get update && apt-get install -y apt-transport-https && apt-get install -y --no-install-recommends     
 RUN apt-get -y install software-properties-common
 RUN apt-get -y install python3.8 
 RUN apt-get -y install git
 RUN apt-get -y install python3-pip
-
-USER 1001
 
 LABEL io.k8s.description="S2I builder for custom Jupyter notebooks." \
       io.k8s.display-name="Jupyter Notebook" \
