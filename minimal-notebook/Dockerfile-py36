@@ -2,8 +2,6 @@ FROM registry.cloud.zf-world.com/guenther_erli/nvidia-cuda:cuda10.2-runtime-cudn
 
 LABEL maintainer "Z0003864<vivek.thota@zf.com>"
 
-USER root
-
 # Set ZF proxies
 ENV http_proxy=http://frd-proxy.emea.zf-world.com:8080 \
     https_proxy=http://frd-proxy.emea.zf-world.com:8080 \
