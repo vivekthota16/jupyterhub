@@ -1,8 +1,6 @@
-FROM registry.cloud.zf-world.com/aitechcenter/centos7-python38:latest
+#FROM registry.cloud.zf-world.com/aitechcenter/centos7-python38:latest
 
 USER root
-
-RUN yum install -y rh-nodejs10
 
 COPY . /tmp/src
 
